@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Threading;
 
-namespace GetHandle
+namespace GetHandleApp
 {
     /// <summary>
     /// App.xaml の相互作用ロジック

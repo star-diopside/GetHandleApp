@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual C# Express 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetHandle", "GetHandle\GetHandle.csproj", "{F9D9120E-DA95-48EF-B64A-6C0E655169AA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetHandle", "GetHandle\GetHandle.csproj", "{336D1555-46CD-46C5-85B8-F1161E36D3E2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowHandleInterface", "WindowHandleInterface\WindowHandleInterface.csproj", "{16F09C20-B8DB-4A77-A0ED-01393744433C}"
 EndProject
@@ -13,10 +13,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F9D9120E-DA95-48EF-B64A-6C0E655169AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F9D9120E-DA95-48EF-B64A-6C0E655169AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F9D9120E-DA95-48EF-B64A-6C0E655169AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F9D9120E-DA95-48EF-B64A-6C0E655169AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{336D1555-46CD-46C5-85B8-F1161E36D3E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{336D1555-46CD-46C5-85B8-F1161E36D3E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{336D1555-46CD-46C5-85B8-F1161E36D3E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{336D1555-46CD-46C5-85B8-F1161E36D3E2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{16F09C20-B8DB-4A77-A0ED-01393744433C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{16F09C20-B8DB-4A77-A0ED-01393744433C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16F09C20-B8DB-4A77-A0ED-01393744433C}.Release|Any CPU.ActiveCfg = Release|Any CPU

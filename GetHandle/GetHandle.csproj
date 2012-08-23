@@ -5,10 +5,10 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{F9D9120E-DA95-48EF-B64A-6C0E655169AA}</ProjectGuid>
+    <ProjectGuid>{336D1555-46CD-46C5-85B8-F1161E36D3E2}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GetHandle</RootNamespace>
+    <RootNamespace>GetHandleApp</RootNamespace>
     <AssemblyName>GetHandle</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
@@ -47,6 +47,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -67,8 +68,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="src\GetHandle\View\MainWindowData.cs" />
-    <Page Include="src\GetHandle\View\MainWindow.xaml">
+    <Page Include="src\GetHandleApp\View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -76,8 +76,18 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="src\GetHandle\Function\WindowProcFactoryMethod.cs" />
-    <Compile Include="src\GetHandle\View\MainWindow.xaml.cs">
+    <Compile Include="src\GetHandleApp\View\Action\MouseCaptureAction.cs" />
+    <Compile Include="src\GetHandleApp\View\Action\ChangeImageAction.cs" />
+    <Compile Include="src\GetHandleApp\View\Action\ConfirmDialogAction.cs" />
+    <Compile Include="src\GetHandleApp\Command\DelegateCommand.cs" />
+    <Compile Include="src\GetHandleApp\Command\UICommands.cs" />
+    <Compile Include="src\GetHandleApp\Converter\EnumBooleanConverter.cs" />
+    <Compile Include="src\GetHandleApp\Model\GetHandleModel.cs" />
+    <Compile Include="src\GetHandleApp\Util\DataErrorInfoHelper.cs" />
+    <Compile Include="src\GetHandleApp\Util\WindowProcFactoryMethod.cs" />
+    <Compile Include="src\GetHandleApp\ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="src\GetHandleApp\Util\Enum\FindWindowSpecifying.cs" />
+    <Compile Include="src\GetHandleApp\View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -108,12 +118,6 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="src\GetHandle\View\Resources\CursorImage.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="src\GetHandle\View\Resources\Empty.png" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\WindowHandleImplement\WindowHandleImplement.csproj">
       <Project>{4DB16D2D-CAC2-4694-9343-4148D84C8336}</Project>
       <Name>WindowHandleImplement</Name>
@@ -124,8 +128,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="src\GetHandleApp\View\Resources\CursorImage.png" />
+    <Resource Include="src\GetHandleApp\View\Resources\Empty.png" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Resources\TargetCursor.cur" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Reflection;
-using GetHandle.Properties;
+using GetHandle.Function;
+using GetHandleApp.Properties;
 
-namespace GetHandle.Function
+namespace GetHandleApp.Util
 {
     /// <summary>
     /// IWindowProcFactory を実装するクラスを生成するクラス
