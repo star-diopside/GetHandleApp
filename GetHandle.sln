@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C# Express 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 2012 for Windows Desktop
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetHandle", "GetHandle\GetHandle.csproj", "{336D1555-46CD-46C5-85B8-F1161E36D3E2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowHandleInterface", "WindowHandleInterface\WindowHandleInterface.csproj", "{16F09C20-B8DB-4A77-A0ED-01393744433C}"
