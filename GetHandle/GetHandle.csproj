@@ -48,7 +48,14 @@
     <OutputPath>bin\Release\</OutputPath>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Spring.Core">
+      <HintPath>..\Library\Spring.NET\Spring.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -65,7 +72,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WPFToolkit.Extended">
-      <HintPath>..\Library\WPFToolkit.Extended.dll</HintPath>
+      <HintPath>..\Library\ExtendedWPFToolkit\WPFToolkit.Extended.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -89,7 +96,6 @@
     <Compile Include="src\GetHandleApp\Converter\EnumBooleanConverter.cs" />
     <Compile Include="src\GetHandleApp\Model\GetHandleModel.cs" />
     <Compile Include="src\GetHandleApp\Util\DataErrorInfoHelper.cs" />
-    <Compile Include="src\GetHandleApp\Util\WindowProcFactoryMethod.cs" />
     <Compile Include="src\GetHandleApp\ViewModel\MainWindowViewModel.cs" />
     <Compile Include="src\GetHandleApp\Util\Enum\FindWindowSpecifying.cs" />
     <Compile Include="src\GetHandleApp\View\MainWindow.xaml.cs">

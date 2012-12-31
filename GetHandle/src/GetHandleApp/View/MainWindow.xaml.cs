@@ -1,6 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using GetHandleApp.ViewModel;
+using Spring.Context;
+using Spring.Context.Support;
 
 namespace GetHandleApp.View
 {
@@ -12,7 +14,9 @@ namespace GetHandleApp.View
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new MainWindowViewModel();
+
+            IApplicationContext ctx = ContextRegistry.GetContext();
+            this.DataContext = (MainWindowViewModel)ctx.GetObject("MainWindowViewModel");
         }
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)

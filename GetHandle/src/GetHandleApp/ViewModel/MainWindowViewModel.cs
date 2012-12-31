@@ -11,7 +11,7 @@ using GetHandleApp.Util.Enum;
 
 namespace GetHandleApp.ViewModel
 {
-    class MainWindowViewModel : IDataErrorInfo, INotifyPropertyChanged
+    public class MainWindowViewModel : IDataErrorInfo, INotifyPropertyChanged
     {
         #region P/Invoke
 
@@ -148,7 +148,7 @@ namespace GetHandleApp.ViewModel
             // ハンドル取得コマンドの設定
             this.GetHandle = new DelegateCommand()
             {
-                ExecuteHandler = delegate { this._model.FindWindow(); }
+                ExecuteHandler = delegate { this.Model.FindWindow(); }
             };
 
             // 自分自身のハンドル取得コマンドの設定
@@ -160,19 +160,19 @@ namespace GetHandleApp.ViewModel
             // タスクバーのハンドル取得コマンドの設定
             this.GetTaskBarHandle = new DelegateCommand()
             {
-                ExecuteHandler = delegate { this._model.FindTaskBarHandle(); }
+                ExecuteHandler = delegate { this.Model.FindTaskBarHandle(); }
             };
 
             // 取得したハンドルが示すウィンドウ名の変更コマンドの設定
             this.SetWindowName = new DelegateCommand()
             {
-                ExecuteHandler = delegate { this._model.SetWindowText(); }
+                ExecuteHandler = delegate { this.Model.SetWindowText(); }
             };
 
             // 取得したハンドルが示すウィンドウのクローズコマンドの設定
             this.WindowClose = new DelegateCommand()
             {
-                ExecuteHandler = delegate { this._model.WindowClose(); }
+                ExecuteHandler = delegate { this.Model.WindowClose(); }
             };
 
             // 取得したハンドルが示すウィンドウのレイヤード設定変更コマンドの設定
@@ -193,7 +193,7 @@ namespace GetHandleApp.ViewModel
         {
             get
             {
-                return this._model.IsFoundWindow;
+                return this.Model.IsFoundWindow;
             }
         }
 
@@ -204,11 +204,11 @@ namespace GetHandleApp.ViewModel
         {
             get
             {
-                return this._model.Specifying;
+                return this.Model.Specifying;
             }
             set
             {
-                this._model.Specifying = value;
+                this.Model.Specifying = value;
             }
         }
 
@@ -221,7 +221,7 @@ namespace GetHandleApp.ViewModel
             {
                 if (this._bufferFindWindowPointX == null)
                 {
-                    return this._model.FindWindowPointX.ToString();
+                    return this.Model.FindWindowPointX.ToString();
                 }
                 else
                 {
@@ -242,7 +242,7 @@ namespace GetHandleApp.ViewModel
                 }
                 else
                 {
-                    this._model.FindWindowPointX = posX;
+                    this.Model.FindWindowPointX = posX;
                     this._errorHelper.ErrorMap.Remove(propertyName);
                 }
 
@@ -269,7 +269,7 @@ namespace GetHandleApp.ViewModel
             {
                 if (this._bufferFindWindowPointY == null)
                 {
-                    return this._model.FindWindowPointY.ToString();
+                    return this.Model.FindWindowPointY.ToString();
                 }
                 else
                 {
@@ -290,7 +290,7 @@ namespace GetHandleApp.ViewModel
                 }
                 else
                 {
-                    this._model.FindWindowPointY = posY;
+                    this.Model.FindWindowPointY = posY;
                     this._errorHelper.ErrorMap.Remove(propertyName);
                 }
 
@@ -315,11 +315,11 @@ namespace GetHandleApp.ViewModel
         {
             get
             {
-                return this._model.FindWindowClassName;
+                return this.Model.FindWindowClassName;
             }
             set
             {
-                this._model.FindWindowClassName = value;
+                this.Model.FindWindowClassName = value;
             }
         }
 
@@ -330,11 +330,11 @@ namespace GetHandleApp.ViewModel
         {
             get
             {
-                return this._model.FindWindowTextName;
+                return this.Model.FindWindowTextName;
             }
             set
             {
-                this._model.FindWindowTextName = value;
+                this.Model.FindWindowTextName = value;
             }
         }
 
@@ -345,7 +345,7 @@ namespace GetHandleApp.ViewModel
         {
             get
             {
-                return this._model.FindWindowResultClassName;
+                return this.Model.FindWindowResultClassName;
             }
         }
 
@@ -356,11 +356,11 @@ namespace GetHandleApp.ViewModel
         {
             get
             {
-                return this._model.FindWindowResultTextName;
+                return this.Model.FindWindowResultTextName;
             }
             set
             {
-                this._model.FindWindowResultTextName = value;
+                this.Model.FindWindowResultTextName = value;
             }
         }
 
@@ -369,17 +369,17 @@ namespace GetHandleApp.ViewModel
         /// <summary>
         /// モデルオブジェクト
         /// </summary>
-        private GetHandleModel _model = new GetHandleModel();
+        public GetHandleModel Model { get; set; }
 
         /// <summary>
-        /// コンストラクタ
+        /// 初期化
         /// </summary>
-        public MainWindowViewModel()
+        public void Initialize()
         {
             InitializeCommand();
 
             // モデルオブジェクトの PropertyChanged イベントを設定する。
-            this._model.PropertyChanged += (sender, e) =>
+            this.Model.PropertyChanged += (sender, e) =>
             {
                 this.OnPropertyChanged(e);
             };
@@ -398,8 +398,8 @@ namespace GetHandleApp.ViewModel
             POINT cursorPos;
             GetCursorPos(out cursorPos);
 
-            this._model.FindWindowPointX = cursorPos.X;
-            this._model.FindWindowPointY = cursorPos.Y;
+            this.Model.FindWindowPointX = cursorPos.X;
+            this.Model.FindWindowPointY = cursorPos.Y;
         }
 
         /// <summary>
@@ -408,7 +408,7 @@ namespace GetHandleApp.ViewModel
         private void GetOwnHandle_Execute(Visual parameter)
         {
             HwndSource source = (HwndSource)HwndSource.FromVisual(parameter);
-            this._model.FindWindowFromHwnd(source.Handle);
+            this.Model.FindWindowFromHwnd(source.Handle);
         }
     }
 }

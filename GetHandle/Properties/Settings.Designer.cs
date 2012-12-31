@@ -22,23 +22,5 @@ namespace GetHandleApp.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("WindowHandleImplement.dll")]
-        public string WindowProcFactoryAssemblyFile {
-            get {
-                return ((string)(this["WindowProcFactoryAssemblyFile"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("WindowHandleImplement.WindowProcFactoryImpl")]
-        public string WindowProcFactoryClass {
-            get {
-                return ((string)(this["WindowProcFactoryClass"]));
-            }
-        }
     }
 }

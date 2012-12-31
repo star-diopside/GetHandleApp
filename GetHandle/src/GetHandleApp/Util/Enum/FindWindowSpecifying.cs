@@ -3,7 +3,7 @@
     /// <summary>
     /// ウィンドウ検索方法を表す列挙体
     /// </summary>
-    enum FindWindowSpecifying
+    public enum FindWindowSpecifying
     {
         /// <summary>
         /// ウィンドウ位置を指定しての検索

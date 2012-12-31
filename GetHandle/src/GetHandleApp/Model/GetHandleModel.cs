@@ -6,7 +6,7 @@ using GetHandleApp.Util.Enum;
 
 namespace GetHandleApp.Model
 {
-    class GetHandleModel : INotifyPropertyChanged
+    public class GetHandleModel : INotifyPropertyChanged
     {
         #region PropertyChanged イベントの実装
 
@@ -37,6 +37,11 @@ namespace GetHandleApp.Model
         }
 
         #endregion
+
+        /// <summary>
+        /// ウィンドウ操作オブジェクトファクトリ
+        /// </summary>
+        public IWindowProcFactory WindowProcFactory { get; set; }
 
         #region プロパティ
 
@@ -254,7 +259,7 @@ namespace GetHandleApp.Model
             if (this.Specifying == FindWindowSpecifying.Position)
             {
                 System.Drawing.Point p = new System.Drawing.Point(this.FindWindowPointX, this.FindWindowPointY);
-                windowProc = WindowProcFactoryMethod.Instance.FindWindow(p);
+                windowProc = this.WindowProcFactory.FindWindow(p);
             }
             else if (this.Specifying == FindWindowSpecifying.WindowClass)
             {
@@ -270,7 +275,7 @@ namespace GetHandleApp.Model
                     windowName = this.FindWindowTextName;
                 }
 
-                windowProc = WindowProcFactoryMethod.Instance.FindWindow(className, windowName);
+                windowProc = this.WindowProcFactory.FindWindow(className, windowName);
             }
             else
             {
@@ -289,7 +294,7 @@ namespace GetHandleApp.Model
             this.WindowProc = null;
 
             // ウィンドウハンドルを取得する。
-            FindWindow(WindowProcFactoryMethod.Instance.GetControlWindow(hwnd));
+            FindWindow(this.WindowProcFactory.GetControlWindow(hwnd));
         }
 
         /// <summary>
@@ -301,7 +306,7 @@ namespace GetHandleApp.Model
             this.WindowProc = null;
 
             // タスクバーのウィンドウハンドルを取得する。
-            FindWindow(WindowProcFactoryMethod.Instance.GetTaskBarWindow());
+            FindWindow(this.WindowProcFactory.GetTaskBarWindow());
         }
 
         /// <summary>
