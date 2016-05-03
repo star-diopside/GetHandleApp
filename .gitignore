@@ -1,7 +1,4 @@
-/*.suo
-/GetHandle/bin/
-/GetHandle/obj/
-/WindowHandleInterface/bin/
-/WindowHandleInterface/obj/
-/WindowHandleImplement/bin/
-/WindowHandleImplement/obj/
+.vs/
+packages/
+bin/
+obj/
