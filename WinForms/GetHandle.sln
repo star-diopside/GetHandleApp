@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C# Express 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetHandle", "GetHandle\GetHandle.csproj", "{EFE2A866-066A-4E19-8BBF-463261746580}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowHandleInterface", "WindowHandleInterface\WindowHandleInterface.csproj", "{16F09C20-B8DB-4A77-A0ED-01393744433C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowHandleImplement", "WindowHandleImplement\WindowHandleImplement.csproj", "{4DB16D2D-CAC2-4694-9343-4148D84C8336}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EFE2A866-066A-4E19-8BBF-463261746580}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFE2A866-066A-4E19-8BBF-463261746580}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFE2A866-066A-4E19-8BBF-463261746580}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFE2A866-066A-4E19-8BBF-463261746580}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16F09C20-B8DB-4A77-A0ED-01393744433C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16F09C20-B8DB-4A77-A0ED-01393744433C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16F09C20-B8DB-4A77-A0ED-01393744433C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16F09C20-B8DB-4A77-A0ED-01393744433C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DB16D2D-CAC2-4694-9343-4148D84C8336}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DB16D2D-CAC2-4694-9343-4148D84C8336}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DB16D2D-CAC2-4694-9343-4148D84C8336}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DB16D2D-CAC2-4694-9343-4148D84C8336}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
