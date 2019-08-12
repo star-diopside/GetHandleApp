@@ -1,0 +1,11 @@
+﻿<Window x:Class="GetHandle.Wpf.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:prism="http://prismlibrary.com/"
+        ResizeMode="CanMinimize"
+        SizeToContent="WidthAndHeight"
+        Title="ハンドルの取得">
+    <Grid>
+        <ContentControl prism:RegionManager.RegionName="MainRegion" />
+    </Grid>
+</Window>
