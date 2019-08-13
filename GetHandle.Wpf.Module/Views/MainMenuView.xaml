@@ -1,0 +1,12 @@
+﻿<Menu x:Class="GetHandle.Wpf.Module.Views.MainMenuView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:views="clr-namespace:GetHandle.Wpf.Module.Views">
+    <i:Interaction.Behaviors>
+        <views:ApplicationCommandsBehavior />
+    </i:Interaction.Behaviors>
+    <MenuItem Header="操作(_P)">
+        <MenuItem x:Name="menuItemExit" Header="アプリケーションの終了(_X)" InputGestureText="Alt+F4" Command="Close" />
+    </MenuItem>
+</Menu>

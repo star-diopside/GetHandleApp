@@ -36,10 +36,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Views\Resources\CursorImage.png" />
     <Resource Include="Views\Resources\Empty.png" />
   </ItemGroup>

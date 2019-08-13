@@ -4,23 +4,16 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-             xmlns:command="clr-namespace:GetHandle.Wpf.Module.Command"
              xmlns:converter="clr-namespace:GetHandle.Wpf.Module.Converter"
              xmlns:action="clr-namespace:GetHandle.Wpf.Module.Views.Action"
              Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
              FocusManager.FocusedElement="{Binding ElementName=textPosX}"
              MinWidth="750"
              MaxWidth="750"
-             Name="window"
              prism:ViewModelLocator.AutoWireViewModel="True">
-    <UserControl.CommandBindings>
-        <CommandBinding Command="{x:Static command:UICommands.ApplicationExit}" Executed="ApplicationExit_Executed" />
-    </UserControl.CommandBindings>
     <UserControl.Resources>
-        <!-- ビットマップイメージ -->
         <BitmapImage x:Key="CursorImage" UriSource="Resources\CursorImage.png" />
         <BitmapImage x:Key="EmptyImage" UriSource="Resources\Empty.png" />
-        <!-- スタイル -->
         <Style TargetType="Label">
             <Setter Property="Padding" Value="0" />
         </Style>
@@ -37,144 +30,129 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <!-- コンバータ -->
         <converter:EnumBooleanConverter x:Key="enumBooleanConverter" />
     </UserControl.Resources>
-    <DockPanel>
-        <Menu DockPanel.Dock="Top">
-            <MenuItem Header="操作(_P)">
-                <MenuItem Command="{x:Static command:UICommands.ApplicationExit}" />
-            </MenuItem>
-        </Menu>
-        <Separator DockPanel.Dock="Top" Margin="0" />
-        <StatusBar DockPanel.Dock="Bottom">
-            <StatusBarItem>
-                <TextBlock Text="ステータス" />
-            </StatusBarItem>
-        </StatusBar>
-        <Separator DockPanel.Dock="Bottom" Margin="0" />
-        <DockPanel Margin="8">
-            <DockPanel DockPanel.Dock="Top">
-                <StackPanel Margin="4">
-                    <RadioButton Name="radioPosition" Content="位置で指定する" IsChecked="{Binding Converter={StaticResource enumBooleanConverter}, Path=Specifying.Value, ConverterParameter=Position}" />
-                    <GroupBox Header="位置の指定" Margin="0,8,0,0" IsEnabled="{Binding ElementName=radioPosition, Path=IsChecked}">
-                        <Grid Margin="8">
+    <DockPanel Margin="8">
+        <DockPanel DockPanel.Dock="Top">
+            <StackPanel Margin="4">
+                <RadioButton Name="radioPosition" Content="位置で指定する" IsChecked="{Binding Converter={StaticResource enumBooleanConverter}, Path=Specifying.Value, ConverterParameter=Position}" />
+                <GroupBox Header="位置の指定" Margin="0,8,0,0" IsEnabled="{Binding ElementName=radioPosition, Path=IsChecked}">
+                    <Grid Margin="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Label Content="X座標" VerticalAlignment="Center" Margin="8,0,0,0" />
+                        <TextBox Name="textPosX" Margin="8" Grid.Column="1" Width="80" Text="{Binding Path=FindWindowPointX.Value, ValidatesOnDataErrors=True}" VerticalAlignment="Center" />
+                        <Label Content="Y座標" VerticalAlignment="Center" Margin="8,0,0,0" Grid.Column="2" />
+                        <TextBox Margin="8,8,0,8" Grid.Column="3" Width="80" Text="{Binding Path=FindWindowPointY.Value, ValidatesOnDataErrors=True}" VerticalAlignment="Center" />
+                        <Grid Grid.Row="1" Grid.ColumnSpan="4">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <Label Content="X座標" VerticalAlignment="Center" Margin="8,0,0,0" />
-                            <TextBox Name="textPosX" Margin="8" Grid.Column="1" Width="80" Text="{Binding Path=FindWindowPointX.Value, ValidatesOnDataErrors=True}" VerticalAlignment="Center" />
-                            <Label Content="Y座標" VerticalAlignment="Center" Margin="8,0,0,0" Grid.Column="2" />
-                            <TextBox Margin="8,8,0,8" Grid.Column="3" Width="80" Text="{Binding Path=FindWindowPointY.Value, ValidatesOnDataErrors=True}" VerticalAlignment="Center" />
-                            <Grid Grid.Row="1" Grid.ColumnSpan="4">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <Button Content="現在のカーソル位置の取得" Margin="8" IsDefault="True" VerticalAlignment="Center" Command="{Binding UpdateCursorPosition}" />
-                                <Image Name="cursor" Source="{StaticResource CursorImage}" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" Focusable="True" Grid.Column="1" Margin="0,0,0.5,1">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="MouseDown">
-                                            <i:EventTrigger.Actions>
-                                                <action:MouseCaptureAction MouseCapture="True" CursorResourceName="TargetCursor" />
-                                                <action:ChangeImageAction ImageSource="{StaticResource EmptyImage}" />
-                                            </i:EventTrigger.Actions>
-                                        </i:EventTrigger>
-                                        <i:EventTrigger EventName="MouseUp">
-                                            <i:EventTrigger.Actions>
-                                                <action:MouseCaptureAction />
-                                                <action:ChangeImageAction ImageSource="{StaticResource CursorImage}" />
-                                            </i:EventTrigger.Actions>
-                                        </i:EventTrigger>
-                                        <i:EventTrigger EventName="MouseMove">
-                                            <i:EventTrigger.Actions>
-                                                <i:InvokeCommandAction IsEnabled="{Binding ElementName=cursor, Path=IsMouseCaptured}" Command="{Binding UpdateCursorPosition}" />
-                                            </i:EventTrigger.Actions>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </Image>
-                            </Grid>
-                        </Grid>
-                    </GroupBox>
-                </StackPanel>
-                <StackPanel Margin="4">
-                    <RadioButton Name="radioWindowClass" Content="クラス名とウィンドウ名で指定する" IsChecked="{Binding Converter={StaticResource enumBooleanConverter}, Path=Specifying.Value, ConverterParameter=WindowClass}" />
-                    <GroupBox Header="クラス名とウィンドウ名の指定" Margin="0,8,0,0" IsEnabled="{Binding ElementName=radioWindowClass, Path=IsChecked}">
-                        <Grid Margin="16,8,8,8">
-                            <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <Label Content="クラス名" HorizontalAlignment="Right" VerticalAlignment="Center" />
-                            <Label Content="ウィンドウ名" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="1" />
-                            <TextBox Margin="8" Grid.Column="1" VerticalAlignment="Center" Text="{Binding FindWindowClassName.Value}" />
-                            <TextBox Margin="8" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Text="{Binding FindWindowTextName.Value}" />
+                            <Button Content="現在のカーソル位置の取得" Margin="8" IsDefault="True" VerticalAlignment="Center" Command="{Binding UpdateCursorPosition}" />
+                            <Image Name="cursor" Source="{StaticResource CursorImage}" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" Focusable="True" Grid.Column="1" Margin="0,0,0.5,1">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseDown">
+                                        <i:EventTrigger.Actions>
+                                            <action:MouseCaptureAction MouseCapture="True" CursorResourceName="TargetCursor" />
+                                            <action:ChangeImageAction ImageSource="{StaticResource EmptyImage}" />
+                                        </i:EventTrigger.Actions>
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="MouseUp">
+                                        <i:EventTrigger.Actions>
+                                            <action:MouseCaptureAction />
+                                            <action:ChangeImageAction ImageSource="{StaticResource CursorImage}" />
+                                        </i:EventTrigger.Actions>
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="MouseMove">
+                                        <i:EventTrigger.Actions>
+                                            <i:InvokeCommandAction IsEnabled="{Binding ElementName=cursor, Path=IsMouseCaptured}" Command="{Binding UpdateCursorPosition}" />
+                                        </i:EventTrigger.Actions>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Image>
                         </Grid>
-                    </GroupBox>
-                </StackPanel>
-            </DockPanel>
-            <UniformGrid DockPanel.Dock="Top" Columns="3">
-                <Button Content="上記の設定で取得する" Margin="4" Command="{Binding GetHandle}" />
-                <Button Content="自分自身のハンドルを取得する" Margin="4" Command="{Binding GetOwnHandle}" CommandParameter="{Binding ElementName=window}" />
-                <Button Content="タスクバーのハンドルを取得する" Margin="4" Command="{Binding GetTaskBarHandle}" />
-            </UniformGrid>
-            <Grid DockPanel.Dock="Top" Margin="16,16,4,8">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Label Content="クラス名" HorizontalAlignment="Right" VerticalAlignment="Center" />
-                <Label Content="ウィンドウ名" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="1" />
-                <TextBox Margin="8,4" Grid.Column="1" VerticalAlignment="Center" IsReadOnly="True" Text="{Binding Path=FindWindowResultClassName.Value, Mode=OneWay}" />
-                <TextBox Margin="8,4" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Text="{Binding FindWindowResultTextName.Value}" />
-                <Button Content="変更を適用する" Margin="0,4" Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" IsEnabled="{Binding IsFoundWindow.Value}" Command="{Binding SetWindowName}" />
-                <Button Content="ウィンドウを閉じる" Margin="0,4" Grid.Column="2" Grid.Row="2" VerticalAlignment="Center" IsEnabled="{Binding IsFoundWindow.Value}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <i:EventTrigger.Actions>
-                                <action:ConfirmDialogAction Caption="警告" Message="この操作による動作保障はできません。実行しますか？" Button="YesNo" Icon="Warning" ConfirmResult="Yes" Command="{Binding WindowClose}" />
-                            </i:EventTrigger.Actions>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Button>
-            </Grid>
-            <GroupBox Header="レイヤードウィンドウ設定" IsEnabled="{Binding IsFoundWindow.Value}">
-                <DockPanel>
-                    <StackPanel Margin="8">
-                        <ToggleButton Name="checkLayeredWindow" Content="レイヤードウィンドウ" />
-                    </StackPanel>
-                    <GroupBox Header="透明度設定" Margin="8" IsEnabled="{Binding ElementName=checkLayeredWindow, Path=IsChecked}">
-                        <StackPanel Margin="8">
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="透明度" VerticalAlignment="Center" Margin="8" />
-                                <xctk:IntegerUpDown Value="255" Minimum="0" Maximum="255" VerticalAlignment="Center" Margin="8" Width="60" />
-                                <CheckBox Name="checkTransparentColor" Content="透明色を指定する" VerticalAlignment="Center" Margin="32,8,8,8" />
-                                <Button Content="透明色の選択" VerticalAlignment="Center" Margin="8" IsEnabled="{Binding ElementName=checkTransparentColor, Path=IsChecked}" />
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
-                                <Button Content="設定を適用する" Margin="8" Command="{Binding UpdateLayeredWindowAttributes}" />
-                            </StackPanel>
-                        </StackPanel>
-                    </GroupBox>
-                </DockPanel>
-            </GroupBox>
+                    </Grid>
+                </GroupBox>
+            </StackPanel>
+            <StackPanel Margin="4">
+                <RadioButton Name="radioWindowClass" Content="クラス名とウィンドウ名で指定する" IsChecked="{Binding Converter={StaticResource enumBooleanConverter}, Path=Specifying.Value, ConverterParameter=WindowClass}" />
+                <GroupBox Header="クラス名とウィンドウ名の指定" Margin="0,8,0,0" IsEnabled="{Binding ElementName=radioWindowClass, Path=IsChecked}">
+                    <Grid Margin="16,8,8,8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Label Content="クラス名" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                        <Label Content="ウィンドウ名" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="1" />
+                        <TextBox Margin="8" Grid.Column="1" VerticalAlignment="Center" Text="{Binding FindWindowClassName.Value}" />
+                        <TextBox Margin="8" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Text="{Binding FindWindowTextName.Value}" />
+                    </Grid>
+                </GroupBox>
+            </StackPanel>
         </DockPanel>
+        <UniformGrid DockPanel.Dock="Top" Columns="3">
+            <Button Content="上記の設定で取得する" Margin="4" Command="{Binding GetHandle}" />
+            <Button Content="自分自身のハンドルを取得する" Margin="4" Command="{Binding GetOwnHandle}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}" />
+            <Button Content="タスクバーのハンドルを取得する" Margin="4" Command="{Binding GetTaskBarHandle}" />
+        </UniformGrid>
+        <Grid DockPanel.Dock="Top" Margin="16,16,4,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Label Content="クラス名" HorizontalAlignment="Right" VerticalAlignment="Center" />
+            <Label Content="ウィンドウ名" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="1" />
+            <TextBox Margin="8,4" Grid.Column="1" VerticalAlignment="Center" IsReadOnly="True" Text="{Binding Path=FindWindowResultClassName.Value, Mode=OneWay}" />
+            <TextBox Margin="8,4" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Text="{Binding FindWindowResultTextName.Value}" />
+            <Button Content="変更を適用する" Margin="0,4" Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" IsEnabled="{Binding IsFoundWindow.Value}" Command="{Binding SetWindowName}" />
+            <Button Content="ウィンドウを閉じる" Margin="0,4" Grid.Column="2" Grid.Row="2" VerticalAlignment="Center" IsEnabled="{Binding IsFoundWindow.Value}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:EventTrigger.Actions>
+                            <action:ConfirmDialogAction Caption="警告" Message="この操作による動作保障はできません。実行しますか？" Button="YesNo" Icon="Warning" ConfirmResult="Yes" Command="{Binding WindowClose}" />
+                        </i:EventTrigger.Actions>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+        </Grid>
+        <GroupBox Header="レイヤードウィンドウ設定" IsEnabled="{Binding IsFoundWindow.Value}">
+            <DockPanel>
+                <StackPanel Margin="8">
+                    <ToggleButton Name="checkLayeredWindow" Content="レイヤードウィンドウ" />
+                </StackPanel>
+                <GroupBox Header="透明度設定" Margin="8" IsEnabled="{Binding ElementName=checkLayeredWindow, Path=IsChecked}">
+                    <StackPanel Margin="8">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="透明度" VerticalAlignment="Center" Margin="8" />
+                            <xctk:IntegerUpDown Value="255" Minimum="0" Maximum="255" VerticalAlignment="Center" Margin="8" Width="60" />
+                            <CheckBox Name="checkTransparentColor" Content="透明色を指定する" VerticalAlignment="Center" Margin="32,8,8,8" />
+                            <Button Content="透明色の選択" VerticalAlignment="Center" Margin="8" IsEnabled="{Binding ElementName=checkTransparentColor, Path=IsChecked}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
+                            <Button Content="設定を適用する" Margin="8" Command="{Binding UpdateLayeredWindowAttributes}" />
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+            </DockPanel>
+        </GroupBox>
     </DockPanel>
 </UserControl>

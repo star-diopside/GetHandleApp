@@ -10,7 +10,8 @@ namespace GetHandle.Wpf.Module
         public void OnInitialized(IContainerProvider containerProvider)
         {
             var regionManager = containerProvider.Resolve<IRegionManager>();
-            regionManager.RegisterViewWithRegion("MainRegion", typeof(MainView));
+            regionManager.RegisterViewWithRegion("MainContent", typeof(MainView));
+            regionManager.RegisterViewWithRegion("MainMenu", typeof(MainMenuView));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)

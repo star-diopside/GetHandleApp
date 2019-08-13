@@ -7,6 +7,7 @@ using Reactive.Bindings.Extensions;
 using System;
 using System.Reactive.Disposables;
 using System.Runtime.InteropServices;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -189,7 +190,7 @@ namespace GetHandle.Wpf.Module.ViewModels
         /// </summary>
         private void GetOwnHandle_Execute(Visual parameter)
         {
-            HwndSource source = (HwndSource)HwndSource.FromVisual(parameter);
+            HwndSource source = (HwndSource)PresentationSource.FromVisual(parameter);
             _model.FindWindowFromHwnd(source.Handle);
         }
     }
