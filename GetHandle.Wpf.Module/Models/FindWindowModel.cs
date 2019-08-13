@@ -8,7 +8,7 @@ using WindowHandleInterface.Function;
 
 namespace GetHandle.Wpf.Module.Models
 {
-    public class GetHandleModel : IDisposable
+    public class FindWindowModel : IFindWindowModel, IDisposable
     {
         private readonly CompositeDisposable _disposable = new CompositeDisposable();
 
@@ -17,13 +17,13 @@ namespace GetHandle.Wpf.Module.Models
         /// </summary>
         private readonly IWindowProcFactory _windowProcFactory;
 
-        public GetHandleModel(IWindowProcFactory windowProcFactory)
+        public FindWindowModel(IWindowProcFactory windowProcFactory)
         {
             _windowProcFactory = windowProcFactory;
 
             // プロパティを設定する。
             IsFoundWindow = WindowProc.Select(x => x != null).ToReadOnlyReactivePropertySlim().AddTo(_disposable);
-            IsLayeredWindow = WindowProc.Select(x => x?.IsLayeredWindow ?? false).ToReadOnlyReactivePropertySlim().AddTo(_disposable);
+            IsLayeredWindow = WindowProc.Select(x => x != null && x.IsLayeredWindow).ToReadOnlyReactivePropertySlim().AddTo(_disposable);
         }
 
         public void Dispose()

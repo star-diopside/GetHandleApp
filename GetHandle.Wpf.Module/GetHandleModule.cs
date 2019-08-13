@@ -1,4 +1,5 @@
-﻿using GetHandle.Wpf.Module.Views;
+﻿using GetHandle.Wpf.Module.Models;
+using GetHandle.Wpf.Module.Views;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
@@ -16,6 +17,7 @@ namespace GetHandle.Wpf.Module
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.Register<IFindWindowModel, FindWindowModel>();
         }
     }
 }

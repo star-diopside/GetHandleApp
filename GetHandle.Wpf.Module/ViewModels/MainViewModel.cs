@@ -17,9 +17,9 @@ namespace GetHandle.Wpf.Module.ViewModels
     public class MainViewModel : BindableBase, IDisposable
     {
         private readonly CompositeDisposable _disposable = new CompositeDisposable();
-        private readonly GetHandleModel _model;
+        private readonly IFindWindowModel _model;
 
-        public MainViewModel(GetHandleModel model)
+        public MainViewModel(IFindWindowModel model)
         {
             _model = model;
 
