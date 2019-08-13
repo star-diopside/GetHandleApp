@@ -39,19 +39,21 @@ namespace GetHandle.Wpf.Module.ViewModels
                                      .SetValidateNotifyError(s => int.TryParse(s, out _) ? null : "整数を入力してください。")
                                      .AddTo(_disposable);
 
-            UpdateCursorPosition = new DelegateCommand(UpdateCursorPosition_Execute);
+            UpdateCursorPositionCommand = new DelegateCommand(UpdateCursorPosition_Execute);
 
-            GetHandle = new DelegateCommand(() => _model.FindWindow());
+            GetHandleCommand = new DelegateCommand(_model.FindWindow);
 
-            GetOwnHandle = new DelegateCommand<Visual>(GetOwnHandle_Execute);
+            GetOwnHandleCommand = new DelegateCommand<Visual>(GetOwnHandle_Execute);
 
-            GetTaskBarHandle = new DelegateCommand(() => _model.FindTaskBarHandle());
+            GetTaskBarHandleCommand = new DelegateCommand(_model.FindTaskBarHandle);
 
-            SetWindowName = new DelegateCommand(() => _model.SetWindowText());
+            var command = IsFoundWindow.ToReactiveCommand();
+            command.Subscribe(_model.SetWindowText).AddTo(_disposable);
+            SetWindowNameCommand = command;
 
-            WindowClose = new DelegateCommand(() => _model.WindowClose());
+            WindowCloseCommand = new DelegateCommand(_model.WindowClose);
 
-            UpdateLayeredWindowAttributes = new DelegateCommand(() => { });
+            UpdateLayeredWindowAttributesCommand = new DelegateCommand(() => throw new NotImplementedException());
         }
 
         public void Dispose()
@@ -95,37 +97,37 @@ namespace GetHandle.Wpf.Module.ViewModels
         /// <summary>
         /// カーソル位置取得コマンド
         /// </summary>
-        public ICommand UpdateCursorPosition { get; }
+        public ICommand UpdateCursorPositionCommand { get; }
 
         /// <summary>
         /// ハンドル取得コマンド
         /// </summary>
-        public ICommand GetHandle { get; }
+        public ICommand GetHandleCommand { get; }
 
         /// <summary>
         /// 自分自身のハンドル取得コマンド
         /// </summary>
-        public ICommand GetOwnHandle { get; }
+        public ICommand GetOwnHandleCommand { get; }
 
         /// <summary>
         /// タスクバーのハンドル取得コマンド
         /// </summary>
-        public ICommand GetTaskBarHandle { get; }
+        public ICommand GetTaskBarHandleCommand { get; }
 
         /// <summary>
         /// 取得したハンドルが示すウィンドウ名の変更コマンド
         /// </summary>
-        public ICommand SetWindowName { get; }
+        public ICommand SetWindowNameCommand { get; }
 
         /// <summary>
         /// 取得したハンドルが示すウィンドウのクローズコマンド
         /// </summary>
-        public ICommand WindowClose { get; }
+        public ICommand WindowCloseCommand { get; }
 
         /// <summary>
         /// 取得したハンドルが示すウィンドウのレイヤード設定変更コマンド
         /// </summary>
-        public ICommand UpdateLayeredWindowAttributes { get; }
+        public ICommand UpdateLayeredWindowAttributesCommand { get; }
 
         #endregion
 
