@@ -22,6 +22,9 @@ namespace GetHandle.Wpf.Module.ViewModels
         {
             _model = model;
 
+            //------------------------------
+            // プロパティの設定を行う。
+            //------------------------------
             FindWindowPointX = _model.FindWindowPoint
                                      .ToReactivePropertyAsSynchronized(x => x.Value,
                                                                        p => p.X.ToString(),
@@ -38,21 +41,23 @@ namespace GetHandle.Wpf.Module.ViewModels
                                      .SetValidateNotifyError(s => int.TryParse(s, out _) ? null : "整数を入力してください。")
                                      .AddTo(_disposable);
 
-            UpdateCursorPositionCommand = new DelegateCommand(UpdateCursorPosition_Execute);
+            //------------------------------
+            // コマンドの設定を行う。
+            //------------------------------
+            ReactiveCommand ToReactiveCommand(Action executeMethod, IObservable<bool> canExecute)
+            {
+                var command = canExecute.ToReactiveCommand();
+                command.Subscribe(executeMethod).AddTo(_disposable);
+                return command;
+            }
 
-            GetHandleCommand = new DelegateCommand(_model.FindWindow);
-
-            GetOwnHandleCommand = new DelegateCommand<Visual>(GetOwnHandle_Execute);
-
-            GetTaskBarHandleCommand = new DelegateCommand(_model.FindTaskBarHandle);
-
-            var command = IsFoundWindow.ToReactiveCommand();
-            command.Subscribe(_model.SetWindowText).AddTo(_disposable);
-            SetWindowNameCommand = command;
-
-            WindowCloseCommand = new DelegateCommand(_model.WindowClose);
-
-            UpdateLayeredWindowAttributesCommand = new DelegateCommand(() => throw new NotImplementedException());
+            UpdateCursorPositionCommand = new DelegateCommand(UpdateCursorPosition);
+            GetHandleCommand = new DelegateCommand(GetHandle);
+            GetOwnHandleCommand = new DelegateCommand<Visual>(GetOwnHandle);
+            GetTaskBarHandleCommand = new DelegateCommand(GetTaskBarHandle);
+            SetWindowNameCommand = ToReactiveCommand(SetWindowName, IsFoundWindow);
+            WindowCloseCommand = new DelegateCommand(WindowClose);
+            UpdateLayeredWindowAttributesCommand = new DelegateCommand(UpdateLayeredWindowAttributes);
         }
 
         public void Dispose()
@@ -147,19 +152,59 @@ namespace GetHandle.Wpf.Module.ViewModels
         /// <summary>
         /// カーソル位置取得イベント
         /// </summary>
-        private void UpdateCursorPosition_Execute()
+        private void UpdateCursorPosition()
         {
             // 現在のカーソル位置を取得し、モデルオブジェクトに設定する。
             _model.FindWindowPoint.Value = System.Windows.Forms.Cursor.Position;
         }
 
         /// <summary>
+        /// ハンドル取得イベント
+        /// </summary>
+        private void GetHandle()
+        {
+            _model.FindWindow();
+        }
+
+        /// <summary>
         /// 自分自身のハンドル取得イベント
         /// </summary>
-        private void GetOwnHandle_Execute(Visual parameter)
+        private void GetOwnHandle(Visual parameter)
         {
             HwndSource source = (HwndSource)System.Windows.PresentationSource.FromVisual(parameter);
             _model.FindWindowFromHwnd(source.Handle);
+        }
+
+        /// <summary>
+        /// タスクバーのハンドル取得イベント
+        /// </summary>
+        private void GetTaskBarHandle()
+        {
+            _model.FindTaskBarHandle();
+        }
+
+        /// <summary>
+        /// 取得したハンドルが示すウィンドウ名の変更イベント
+        /// </summary>
+        private void SetWindowName()
+        {
+            _model.SetWindowText();
+        }
+
+        /// <summary>
+        /// 取得したハンドルが示すウィンドウのクローズイベント
+        /// </summary>
+        private void WindowClose()
+        {
+            _model.WindowClose();
+        }
+
+        /// <summary>
+        /// 取得したハンドルが示すウィンドウのレイヤード設定変更イベント
+        /// </summary>
+        private void UpdateLayeredWindowAttributes()
+        {
+            throw new NotImplementedException();
         }
     }
 }
