@@ -1,13 +1,12 @@
 ﻿using GetHandle.Wpf.Module.Models;
-using GetHandle.Wpf.Module.Utility.Enum;
+using GetHandle.Wpf.Module.Utilities.Enum;
 using Prism.Commands;
 using Prism.Mvvm;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System;
+using System.Drawing;
 using System.Reactive.Disposables;
-using System.Runtime.InteropServices;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -23,18 +22,18 @@ namespace GetHandle.Wpf.Module.ViewModels
         {
             _model = model;
 
-            FindWindowPointX = _model.FindWindowPointX
+            FindWindowPointX = _model.FindWindowPoint
                                      .ToReactivePropertyAsSynchronized(x => x.Value,
-                                                                       n => n.ToString(),
-                                                                       s => int.Parse(s),
+                                                                       p => p.X.ToString(),
+                                                                       s => new Point(int.Parse(s), _model.FindWindowPoint.Value.Y),
                                                                        ignoreValidationErrorValue: true)
                                      .SetValidateNotifyError(s => int.TryParse(s, out _) ? null : "整数を入力してください。")
                                      .AddTo(_disposable);
 
-            FindWindowPointY = _model.FindWindowPointY
+            FindWindowPointY = _model.FindWindowPoint
                                      .ToReactivePropertyAsSynchronized(x => x.Value,
-                                                                       n => n.ToString(),
-                                                                       s => int.Parse(s),
+                                                                       p => p.Y.ToString(),
+                                                                       s => new Point(_model.FindWindowPoint.Value.X, int.Parse(s)),
                                                                        ignoreValidationErrorValue: true)
                                      .SetValidateNotifyError(s => int.TryParse(s, out _) ? null : "整数を入力してください。")
                                      .AddTo(_disposable);
@@ -60,37 +59,6 @@ namespace GetHandle.Wpf.Module.ViewModels
         {
             _disposable.Dispose();
         }
-
-        #region P/Invoke
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct POINT
-        {
-            public int X;
-            public int Y;
-
-            public POINT(int x, int y)
-            {
-                this.X = x;
-                this.Y = y;
-            }
-
-            public static implicit operator System.Drawing.Point(POINT p)
-            {
-                return new System.Drawing.Point(p.X, p.Y);
-            }
-
-            public static implicit operator POINT(System.Drawing.Point p)
-            {
-                return new POINT(p.X, p.Y);
-            }
-        }
-
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool GetCursorPos(out POINT lpPoint);
-
-        #endregion
 
         #region Command の定義
 
@@ -166,7 +134,8 @@ namespace GetHandle.Wpf.Module.ViewModels
         /// <summary>
         /// 取得したウィンドウのクラス名のプロパティを取得する。
         /// </summary>
-        public ReadOnlyReactivePropertySlim<string> FindWindowResultClassName => _model.FindWindowResultClassName.ToReadOnlyReactivePropertySlim();
+        public ReadOnlyReactivePropertySlim<string> FindWindowResultClassName
+            => _model.FindWindowResultClassName.ToReadOnlyReactivePropertySlim();
 
         /// <summary>
         /// 取得したウィンドウのウィンドウ名を取得または設定する。
@@ -181,10 +150,7 @@ namespace GetHandle.Wpf.Module.ViewModels
         private void UpdateCursorPosition_Execute()
         {
             // 現在のカーソル位置を取得し、モデルオブジェクトに設定する。
-            GetCursorPos(out POINT cursorPos);
-
-            _model.FindWindowPointX.Value = cursorPos.X;
-            _model.FindWindowPointY.Value = cursorPos.Y;
+            _model.FindWindowPoint.Value = System.Windows.Forms.Cursor.Position;
         }
 
         /// <summary>
@@ -192,7 +158,7 @@ namespace GetHandle.Wpf.Module.ViewModels
         /// </summary>
         private void GetOwnHandle_Execute(Visual parameter)
         {
-            HwndSource source = (HwndSource)PresentationSource.FromVisual(parameter);
+            HwndSource source = (HwndSource)System.Windows.PresentationSource.FromVisual(parameter);
             _model.FindWindowFromHwnd(source.Handle);
         }
     }

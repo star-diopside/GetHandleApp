@@ -1,7 +1,8 @@
-﻿using GetHandle.Wpf.Module.Utility.Enum;
+﻿using GetHandle.Wpf.Module.Utilities.Enum;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System;
+using System.Drawing;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using WindowHandleInterface.Function;
@@ -22,8 +23,13 @@ namespace GetHandle.Wpf.Module.Models
             _windowProcFactory = windowProcFactory;
 
             // プロパティを設定する。
-            IsFoundWindow = WindowProc.Select(x => x != null).ToReadOnlyReactivePropertySlim().AddTo(_disposable);
-            IsLayeredWindow = WindowProc.Select(x => x != null && x.IsLayeredWindow).ToReadOnlyReactivePropertySlim().AddTo(_disposable);
+            IsFoundWindow = WindowProc.Select(x => x != null)
+                                      .ToReadOnlyReactivePropertySlim()
+                                      .AddTo(_disposable);
+
+            IsLayeredWindow = WindowProc.Select(x => x != null && x.IsLayeredWindow)
+                                        .ToReadOnlyReactivePropertySlim()
+                                        .AddTo(_disposable);
         }
 
         public void Dispose()
@@ -41,17 +47,13 @@ namespace GetHandle.Wpf.Module.Models
         /// <summary>
         /// ウィンドウ検索方法のプロパティを取得する。
         /// </summary>
-        public ReactivePropertySlim<FindWindowSpecifying> Specifying { get; } = new ReactivePropertySlim<FindWindowSpecifying>(FindWindowSpecifying.Position);
+        public ReactivePropertySlim<FindWindowSpecifying> Specifying { get; } =
+            new ReactivePropertySlim<FindWindowSpecifying>(FindWindowSpecifying.Position);
 
         /// <summary>
-        /// 位置でウィンドウを指定する場合の X 座標のプロパティを取得する。
+        /// 位置でウィンドウを指定する場合の座標値のプロパティを取得する。
         /// </summary>
-        public ReactivePropertySlim<int> FindWindowPointX { get; } = new ReactivePropertySlim<int>();
-
-        /// <summary>
-        /// 位置でウィンドウを指定する場合の Y 座標のプロパティを取得する。
-        /// </summary>
-        public ReactivePropertySlim<int> FindWindowPointY { get; } = new ReactivePropertySlim<int>();
+        public ReactivePropertySlim<Point> FindWindowPoint { get; } = new ReactivePropertySlim<Point>();
 
         /// <summary>
         /// 名前でウィンドウを指定する場合のクラス名のプロパティを取得する。
@@ -98,23 +100,12 @@ namespace GetHandle.Wpf.Module.Models
 
             if (Specifying.Value == FindWindowSpecifying.Position)
             {
-                System.Drawing.Point p = new System.Drawing.Point(FindWindowPointX.Value, FindWindowPointY.Value);
-                windowProc = _windowProcFactory.FindWindow(p);
+                windowProc = _windowProcFactory.FindWindow(FindWindowPoint.Value);
             }
             else if (Specifying.Value == FindWindowSpecifying.WindowClass)
             {
-                string className = null;
-                string windowName = null;
-
-                if (!string.IsNullOrEmpty(FindWindowClassName.Value))
-                {
-                    className = FindWindowClassName.Value;
-                }
-                if (!string.IsNullOrEmpty(FindWindowTextName.Value))
-                {
-                    windowName = FindWindowTextName.Value;
-                }
-
+                string className = string.IsNullOrEmpty(FindWindowClassName.Value) ? null : FindWindowClassName.Value;
+                string windowName = string.IsNullOrEmpty(FindWindowTextName.Value) ? null : FindWindowTextName.Value;
                 windowProc = _windowProcFactory.FindWindow(className, windowName);
             }
             else

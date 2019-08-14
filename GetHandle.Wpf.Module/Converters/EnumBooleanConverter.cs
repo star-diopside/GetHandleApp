@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace GetHandle.Wpf.Module.Converter
+namespace GetHandle.Wpf.Module.Converters
 {
     class EnumBooleanConverter : IValueConverter
     {

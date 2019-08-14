@@ -1,4 +1,4 @@
-﻿namespace GetHandle.Wpf.Module.Utility.Enum
+﻿namespace GetHandle.Wpf.Module.Utilities.Enum
 {
     /// <summary>
     /// ウィンドウ検索方法を表す列挙体

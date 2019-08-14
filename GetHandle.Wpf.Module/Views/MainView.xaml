@@ -4,7 +4,7 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-             xmlns:converter="clr-namespace:GetHandle.Wpf.Module.Converter"
+             xmlns:converters="clr-namespace:GetHandle.Wpf.Module.Converters"
              xmlns:action="clr-namespace:GetHandle.Wpf.Module.Views.Action"
              Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
              FocusManager.FocusedElement="{Binding ElementName=textPosX}"
@@ -30,7 +30,7 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <converter:EnumBooleanConverter x:Key="enumBooleanConverter" />
+        <converters:EnumBooleanConverter x:Key="enumBooleanConverter" />
     </UserControl.Resources>
     <DockPanel Margin="8">
         <DockPanel DockPanel.Dock="Top">

@@ -1,6 +1,7 @@
-﻿using GetHandle.Wpf.Module.Utility.Enum;
+﻿using GetHandle.Wpf.Module.Utilities.Enum;
 using Reactive.Bindings;
 using System;
+using System.Drawing;
 
 namespace GetHandle.Wpf.Module.Models
 {
@@ -12,14 +13,9 @@ namespace GetHandle.Wpf.Module.Models
         ReactivePropertySlim<FindWindowSpecifying> Specifying { get; }
 
         /// <summary>
-        /// 位置でウィンドウを指定する場合の X 座標のプロパティを取得する。
+        /// 位置でウィンドウを指定する場合の座標値のプロパティを取得する。
         /// </summary>
-        ReactivePropertySlim<int> FindWindowPointX { get; }
-
-        /// <summary>
-        /// 位置でウィンドウを指定する場合の Y 座標のプロパティを取得する。
-        /// </summary>
-        ReactivePropertySlim<int> FindWindowPointY { get; }
+        ReactivePropertySlim<Point> FindWindowPoint { get; }
 
         /// <summary>
         /// 名前でウィンドウを指定する場合のクラス名のプロパティを取得する。
