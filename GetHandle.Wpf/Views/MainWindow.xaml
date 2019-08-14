@@ -1,0 +1,17 @@
+﻿<Window x:Class="GetHandle.Wpf.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:prism="http://prismlibrary.com/"
+        xmlns:views="clr-namespace:GetHandle.Wpf.Views"
+        ResizeMode="CanMinimize"
+        SizeToContent="WidthAndHeight"
+        Title="ハンドルの取得">
+    <i:Interaction.Behaviors>
+        <views:WindowEventBehavior />
+    </i:Interaction.Behaviors>
+    <DockPanel>
+        <ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="MainMenu" />
+        <ContentControl prism:RegionManager.RegionName="MainContent" />
+    </DockPanel>
+</Window>
