@@ -16,7 +16,7 @@ namespace GetHandle.Wpf
     {
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.Register<IWindowProcFactory, WindowProcFactory>();
+            containerRegistry.RegisterSingleton<IWindowProcFactory, WindowProcFactory>();
         }
 
         protected override Window CreateShell()
