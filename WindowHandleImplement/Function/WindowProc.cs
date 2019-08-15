@@ -15,7 +15,7 @@ namespace WindowHandleImplement.Function
         /// <summary>
         /// ウィンドウを示すハンドル値
         /// </summary>
-        private IntPtr _handle;
+        private readonly IntPtr _handle;
 
         /// <summary>
         /// コンストラクタ
@@ -23,7 +23,7 @@ namespace WindowHandleImplement.Function
         /// <param name="handle">ウィンドウを示すハンドル値</param>
         internal WindowProc(IntPtr handle)
         {
-            this._handle = handle;
+            _handle = handle;
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace WindowHandleImplement.Function
         {
             get
             {
-                int windowLong = WindowsAPI.GetWindowLong(this._handle, (int)WindowsAPI.WindowLongConstants.GWL_EXSTYLE);
+                int windowLong = WindowsAPI.GetWindowLong(_handle, (int)WindowsAPI.WindowLongConstants.GWL_EXSTYLE);
 
                 if (windowLong == 0)
                 {
@@ -52,7 +52,7 @@ namespace WindowHandleImplement.Function
         {
             StringBuilder className = new StringBuilder(1024);
 
-            if (WindowsAPI.GetClassName(this._handle, className, className.Capacity) == 0)
+            if (WindowsAPI.GetClassName(_handle, className, className.Capacity) == 0)
             {
                 throw new Win32Exception();
             }
@@ -66,7 +66,7 @@ namespace WindowHandleImplement.Function
         /// <returns>取得したウィンドウテキスト</returns>
         public string GetWindowText()
         {
-            int windowTextLength = WindowsAPI.GetWindowTextLength(this._handle);
+            int windowTextLength = WindowsAPI.GetWindowTextLength(_handle);
 
             if (windowTextLength == 0)
             {
@@ -76,7 +76,7 @@ namespace WindowHandleImplement.Function
             {
                 StringBuilder windowText = new StringBuilder(windowTextLength + 1);
 
-                if (WindowsAPI.GetWindowText(this._handle, windowText, windowText.Capacity) == 0)
+                if (WindowsAPI.GetWindowText(_handle, windowText, windowText.Capacity) == 0)
                 {
                     throw new Win32Exception();
                 }
@@ -91,7 +91,7 @@ namespace WindowHandleImplement.Function
         /// <param name="text">設定するウィンドウテキスト</param>
         public void SetWindowText(string text)
         {
-            if (!WindowsAPI.SetWindowText(this._handle, text))
+            if (!WindowsAPI.SetWindowText(_handle, text))
             {
                 throw new Win32Exception();
             }
@@ -102,8 +102,8 @@ namespace WindowHandleImplement.Function
         /// </summary>
         public void SetLayeredWindow()
         {
-            if (WindowsAPI.SetWindowLong(this._handle, (int)WindowsAPI.WindowLongConstants.GWL_EXSTYLE,
-                                         WindowsAPI.GetWindowLong(this._handle, (int)WindowsAPI.WindowLongConstants.GWL_EXSTYLE) | (int)WindowsAPI.WindowStyles.WS_EX_LAYERED) == 0)
+            if (WindowsAPI.SetWindowLong(_handle, (int)WindowsAPI.WindowLongConstants.GWL_EXSTYLE,
+                                         WindowsAPI.GetWindowLong(_handle, (int)WindowsAPI.WindowLongConstants.GWL_EXSTYLE) | (int)WindowsAPI.WindowStyles.WS_EX_LAYERED) == 0)
             {
                 throw new Win32Exception();
             }
@@ -114,8 +114,8 @@ namespace WindowHandleImplement.Function
         /// </summary>
         public void UnsetLayeredWindow()
         {
-            if (WindowsAPI.SetWindowLong(this._handle, (int)WindowsAPI.WindowLongConstants.GWL_EXSTYLE,
-                                         WindowsAPI.GetWindowLong(this._handle, (int)WindowsAPI.WindowLongConstants.GWL_EXSTYLE) & ~(int)WindowsAPI.WindowStyles.WS_EX_LAYERED) == 0)
+            if (WindowsAPI.SetWindowLong(_handle, (int)WindowsAPI.WindowLongConstants.GWL_EXSTYLE,
+                                         WindowsAPI.GetWindowLong(_handle, (int)WindowsAPI.WindowLongConstants.GWL_EXSTYLE) & ~(int)WindowsAPI.WindowStyles.WS_EX_LAYERED) == 0)
             {
                 throw new Win32Exception();
             }
@@ -170,7 +170,7 @@ namespace WindowHandleImplement.Function
                 flags |= WindowsAPI.LayeredWindowAttributes.LWA_COLORKEY;
             }
 
-            if (!WindowsAPI.SetLayeredWindowAttributes(this._handle, (uint)ColorTranslator.ToWin32(colorKey), alpha, (uint)flags))
+            if (!WindowsAPI.SetLayeredWindowAttributes(_handle, (uint)ColorTranslator.ToWin32(colorKey), alpha, (uint)flags))
             {
                 throw new Win32Exception();
             }
@@ -184,13 +184,9 @@ namespace WindowHandleImplement.Function
         {
             LayeredWindowAttribute attribute = new LayeredWindowAttribute();
 
-            if (this.IsLayeredWindow)
+            if (IsLayeredWindow)
             {
-                uint colorKey;
-                byte alpha;
-                uint flags;
-
-                if (!WindowsAPI.GetLayeredWindowAttributes(this._handle, out colorKey, out alpha, out flags))
+                if (!WindowsAPI.GetLayeredWindowAttributes(_handle, out uint colorKey, out byte alpha, out uint flags))
                 {
                     throw new Win32Exception();
                 }
@@ -227,7 +223,7 @@ namespace WindowHandleImplement.Function
         /// </summary>
         public void CloseWindow()
         {
-            if (!WindowsAPI.PostMessage(this._handle, (uint)WindowsAPI.WindowMessages.WM_CLOSE, IntPtr.Zero, IntPtr.Zero))
+            if (!WindowsAPI.PostMessage(_handle, (uint)WindowsAPI.WindowMessages.WM_CLOSE, IntPtr.Zero, IntPtr.Zero))
             {
                 throw new Win32Exception();
             }
