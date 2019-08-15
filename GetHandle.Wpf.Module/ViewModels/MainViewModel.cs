@@ -5,11 +5,12 @@ using Prism.Mvvm;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System;
-using System.Drawing;
 using System.Reactive.Disposables;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
+using Cursor = System.Windows.Forms.Cursor;
+using Point = System.Drawing.Point;
 
 namespace GetHandle.Wpf.Module.ViewModels
 {
@@ -53,7 +54,7 @@ namespace GetHandle.Wpf.Module.ViewModels
 
             UpdateCursorPositionCommand = new DelegateCommand(UpdateCursorPosition);
             GetHandleCommand = new DelegateCommand(GetHandle);
-            GetOwnHandleCommand = new DelegateCommand<Visual>(GetOwnHandle);
+            GetOwnHandleCommand = new DelegateCommand<DependencyObject>(GetOwnHandle);
             GetTaskBarHandleCommand = new DelegateCommand(GetTaskBarHandle);
             SetWindowNameCommand = ToReactiveCommand(SetWindowName, IsFoundWindow);
             WindowCloseCommand = new DelegateCommand(WindowClose);
@@ -155,7 +156,7 @@ namespace GetHandle.Wpf.Module.ViewModels
         private void UpdateCursorPosition()
         {
             // 現在のカーソル位置を取得し、モデルオブジェクトに設定する。
-            _model.FindWindowPoint.Value = System.Windows.Forms.Cursor.Position;
+            _model.FindWindowPoint.Value = Cursor.Position;
         }
 
         /// <summary>
@@ -169,9 +170,9 @@ namespace GetHandle.Wpf.Module.ViewModels
         /// <summary>
         /// 自分自身のハンドル取得イベント
         /// </summary>
-        private void GetOwnHandle(Visual parameter)
+        private void GetOwnHandle(DependencyObject parameter)
         {
-            HwndSource source = (HwndSource)System.Windows.PresentationSource.FromVisual(parameter);
+            HwndSource source = (HwndSource)PresentationSource.FromVisual(Window.GetWindow(parameter));
             _model.FindWindowFromHwnd(source.Handle);
         }
 
