@@ -13,13 +13,5 @@ namespace GetHandle.Wpf.Module.Views
         {
             InitializeComponent();
         }
-
-        /// <summary>
-        /// アプリケーション終了イベント
-        /// </summary>
-        private void ApplicationExit_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            Window.GetWindow(this).Close();
-        }
     }
 }
