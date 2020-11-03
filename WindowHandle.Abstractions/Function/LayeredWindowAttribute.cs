@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace WindowHandleInterface.Function
+namespace WindowHandle.Function
 {
     /// <summary>
     /// レイヤードウィンドウの属性を表すクラス

@@ -8,8 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WindowHandleImplement\WindowHandleImplement.csproj" />
-    <ProjectReference Include="..\WindowHandleInterface\WindowHandleInterface.csproj" />
+    <ProjectReference Include="..\WindowHandle\WindowHandle.csproj" />
   </ItemGroup>
 
   <ItemGroup>

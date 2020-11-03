@@ -4,8 +4,7 @@ using Prism.Ioc;
 using Prism.Modularity;
 using System.Windows;
 using System.Windows.Threading;
-using WindowHandleImplement.Function;
-using WindowHandleInterface.Function;
+using WindowHandle.Function;
 
 namespace GetHandle.Wpf
 {

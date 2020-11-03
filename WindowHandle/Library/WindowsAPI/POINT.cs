@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Runtime.InteropServices;
 
-namespace WindowHandleImplement.Library.WindowsAPI
+namespace WindowHandle.Library.WindowsAPI
 {
     [StructLayout(LayoutKind.Sequential)]
     internal struct POINT

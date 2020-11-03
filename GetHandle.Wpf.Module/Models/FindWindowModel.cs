@@ -5,7 +5,7 @@ using System;
 using System.Drawing;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using WindowHandleInterface.Function;
+using WindowHandle.Function;
 
 namespace GetHandle.Wpf.Module.Models
 {

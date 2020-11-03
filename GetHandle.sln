@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29201.188
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowHandleInterface", "WindowHandleInterface\WindowHandleInterface.csproj", "{32CEEE76-6A92-40AB-864B-1679F8B67269}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowHandle.Abstractions", "WindowHandle.Abstractions\WindowHandle.Abstractions.csproj", "{32CEEE76-6A92-40AB-864B-1679F8B67269}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowHandleImplement", "WindowHandleImplement\WindowHandleImplement.csproj", "{1ACD1513-EA91-4627-B2AB-FD55C7ADA893}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowHandle", "WindowHandle\WindowHandle.csproj", "{1ACD1513-EA91-4627-B2AB-FD55C7ADA893}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GetHandle.WinForms", "GetHandle.WinForms\GetHandle.WinForms.csproj", "{F7247EB9-CE81-44EE-BCA0-A95FD8052D67}"
 EndProject

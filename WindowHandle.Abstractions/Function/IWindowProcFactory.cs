@@ -1,31 +1,19 @@
 ﻿using System;
 using System.Drawing;
-using WindowHandleImplement.Library.WindowsAPI;
-using WindowHandleInterface.Function;
 
-namespace WindowHandleImplement.Function
+namespace WindowHandle.Function
 {
     /// <summary>
-    /// ウィンドウ操作を行う IWindowProc を実装するクラスを生成するクラス
+    /// ウィンドウ操作を行う IWindowProc を実装するクラスを生成するクラスが実装するインタフェース
     /// </summary>
-    public class WindowProcFactory : IWindowProcFactory
+    public interface IWindowProcFactory
     {
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        public WindowProcFactory()
-        {
-        }
-
         /// <summary>
         /// 指定された座標を含むウィンドウのハンドルを取得する。
         /// </summary>
         /// <param name="point">座標</param>
         /// <returns>取得したウィンドウ操作用の IWindowProc インスタンス</returns>
-        public IWindowProc FindWindow(Point point)
-        {
-            return new WindowProc(WindowsAPI.WindowFromPoint(point));
-        }
+        IWindowProc FindWindow(Point point);
 
         /// <summary>
         /// 指定されたクラス名とウィンドウ名からウィンドウのハンドルを取得する。
@@ -33,28 +21,19 @@ namespace WindowHandleImplement.Function
         /// <param name="className">クラス名</param>
         /// <param name="windowName">ウィンドウ名</param>
         /// <returns>取得したウィンドウ操作用の IWindowProc インスタンス</returns>
-        public IWindowProc FindWindow(string className, string windowName)
-        {
-            return new WindowProc(WindowsAPI.FindWindow(className, windowName));
-        }
+        IWindowProc FindWindow(string className, string windowName);
 
         /// <summary>
         /// 指定されたウィンドウハンドルを取得する。
         /// </summary>
         /// <param name="handle">コントロールのハンドル</param>
         /// <returns>取得したウィンドウ操作用の IWindowProc インスタンス</returns>
-        public IWindowProc GetControlWindow(IntPtr handle)
-        {
-            return new WindowProc(handle);
-        }
+        IWindowProc GetControlWindow(IntPtr handle);
 
         /// <summary>
         /// タスクバーのウィンドウハンドルを取得する。
         /// </summary>
         /// <returns>取得したウィンドウ操作用の IWindowProc インスタンス</returns>
-        public IWindowProc GetTaskBarWindow()
-        {
-            return new WindowProc(WindowsAPI.FindWindow("Shell_TrayWnd", null));
-        }
+        IWindowProc GetTaskBarWindow();
     }
 }

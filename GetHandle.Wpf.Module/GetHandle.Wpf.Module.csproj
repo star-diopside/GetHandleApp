@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WindowHandleInterface\WindowHandleInterface.csproj" />
+    <ProjectReference Include="..\WindowHandle.Abstractions\WindowHandle.Abstractions.csproj" />
   </ItemGroup>
 
   <ItemGroup>

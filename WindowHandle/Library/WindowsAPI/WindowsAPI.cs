@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace WindowHandleImplement.Library.WindowsAPI
+namespace WindowHandle.Library.WindowsAPI
 {
     internal static class WindowsAPI
     {

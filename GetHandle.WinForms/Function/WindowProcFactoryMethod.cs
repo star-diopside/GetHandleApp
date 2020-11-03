@@ -1,7 +1,7 @@
 ﻿using GetHandle.WinForms.Properties;
 using System;
 using System.Reflection;
-using WindowHandleInterface.Function;
+using WindowHandle.Function;
 
 namespace GetHandle.WinForms.Function
 {

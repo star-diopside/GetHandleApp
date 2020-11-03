@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GetHandle.Wpf.Module\GetHandle.Wpf.Module.csproj" />
-    <ProjectReference Include="..\WindowHandleImplement\WindowHandleImplement.csproj" />
+    <ProjectReference Include="..\WindowHandle\WindowHandle.csproj" />
   </ItemGroup>
 
 </Project>

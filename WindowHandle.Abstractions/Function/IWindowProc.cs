@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace WindowHandleInterface.Function
+namespace WindowHandle.Function
 {
     /// <summary>
     /// ウィンドウ操作を行うクラスが実装するインタフェース

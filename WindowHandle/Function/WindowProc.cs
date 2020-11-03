@@ -2,10 +2,9 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Text;
-using WindowHandleImplement.Library.WindowsAPI;
-using WindowHandleInterface.Function;
+using WindowHandle.Library.WindowsAPI;
 
-namespace WindowHandleImplement.Function
+namespace WindowHandle.Function
 {
     /// <summary>
     /// ウィンドウ操作を行うクラス
